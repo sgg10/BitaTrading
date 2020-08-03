@@ -14,7 +14,8 @@ const routerOptions = [
   { path: '/entrada/:id', name: 'Entrada', meta: { requireAuth } },
   { path: '/bitacora/:id', name: 'Bitacora', meta: { requireAuth } },
   { path: '/login', name: 'Login' },
-  { path: '/register', name: 'Register' }
+  { path: '/register', name: 'Register' },
+  { path: '*', name: 'Error' }
 ]
 
 const routes = routerOptions.map(r => {
@@ -31,11 +32,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(route => route.meta.requireAuth)){
-    auth().currentUser ? next() : next({name: 'Login'})
-  }else{
+  if (to.matched.some(route => route.meta.requireAuth)) {
+    auth().currentUser ? next() : next({ name: 'Login' })
+  } else {
     next()
-  }  
+  }
 })
 
 export default router
