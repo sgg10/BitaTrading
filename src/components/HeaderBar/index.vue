@@ -27,6 +27,31 @@
   </div>
 </template>
 
+<script>
+import AuthController from '../../firebase/controllers/AuthController'
+import { auth } from 'firebase'
+const authController = new AuthController()
+export default {
+  data () {
+    return {
+      user: null
+    }
+  },
+  created () {
+    auth().onAuthStateChanged(user => (this.user = user || null))
+  },
+  methods: {
+    go (name) {
+      this.$router.push({ name })
+    },
+    logOut () {
+      authController.signOut()
+      this.go('Login')
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
   .header{
     background: #5E60CE;
