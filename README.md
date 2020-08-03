@@ -1,4 +1,4 @@
-# bitatrading
+# BitaTrading
 
 ## Project setup
 ```
