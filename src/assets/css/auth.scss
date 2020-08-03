@@ -1,0 +1,42 @@
+.formAuth{
+  display: flex;
+  align-items: center;
+  /*background: #d4e9f8;*/
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px 30px;
+}
+
+.formAuth-Container{
+  background: #ece7e7;
+  border: 2px solid #707070;
+  border-radius: 40px;
+  color: #707070;
+  padding: 60px 68px 40px;
+  min-height: 700px;
+  width: 500px;
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.input{
+  border-radius: 40px;
+}
+
+.button{
+  height: 50px;
+  border-radius: 30px;
+  border: none;
+  margin: 20px 0px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 1px;
+  width: 300px;
+  background: #5966E8;
+}
+.button:hover{
+  background: #3140e2;
+}

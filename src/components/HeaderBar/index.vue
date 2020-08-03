@@ -33,7 +33,8 @@ const auth = new AuthController()
 export default {
   data () {
     return {
-      user: null
+      user: null,
+      info: ''
     }
   },
   created () {
