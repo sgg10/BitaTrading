@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import DBController from '../../firebase/controllers/DBController'
 import store from '..'
 
@@ -37,16 +38,32 @@ export default {
         try {
           let datos = {}
           const entradas = []
+          // Se encuentra la bitacora correspondiente
           const bitacora = state.bitacoras.find(bitacora => bitacora.id === id)
           datos = { ...bitacora }
-          db.get('Entradas').where('bitacoraID', '==', id).get().then(result => {
+          // Se consulta todas sus entradas y se genera el listado de la trades
+          db.get('Entradas').where('bitacoraID', '==', id).orderBy('fecha', 'desc').get().then(result => {
             if (!result.empty) {
               const cant = result.docs.length
               datos.cantEntradas = cant
+              datos.listaEntradas = []
               let cantTrades = 0
               result.docs.forEach(entrada => {
                 entradas.push(entrada.data())
                 cantTrades += entrada.data().trades.length
+
+                // Variables de reporte/listado de trades
+                let total = 0
+                let pips = 0
+                let lotaje = ''
+                let divisa = ''
+                entrada.data().trades.forEach(trade => {
+                  divisa += `${trade.divisa} | `
+                  lotaje += `${trade.lotaje} | `
+                  pips += parseFloat(trade.pips)
+                  total += parseFloat(trade.total)
+                })
+                datos.listaEntradas.push({ divisa, fecha: entrada.data().fecha, lotaje, pips, total, id: entrada.id })
               })
               datos.cantTrades = cantTrades
             }
