@@ -28,10 +28,12 @@ import ButtonCreate from '@/components/ButtonCreate'
 import Loading from '@/components/Loading'
 import Lista from './Lista'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import setError from '@/mixins/setError'
 
 export default {
   name: 'Home',
   components: { ButtonCreate, Loading, Lista },
+  mixins: [setError],
   data () {
     return {
       values: {
@@ -57,9 +59,23 @@ export default {
     ...mapGetters('loading', ['isLoading'])
   },
   async created () {
-    this.SET_LOADING(true)
-    await this.getBitacoras()
-    this.SET_LOADING(false)
+    try {
+      this.SET_LOADING(true)
+      await this.getBitacoras()
+    } catch (error) {
+      const errObj = {
+        routeParams: this.$route.params,
+        message: error.message
+      }
+      if (error.response) {
+        errObj.data = error.response.data
+        errObj.status = error.response.status
+      }
+      this.setApiErr(errObj)
+      this.$router.push({ name: 'Error' })
+    } finally {
+      this.SET_LOADING(false)
+    }
   }
 }
 </script>

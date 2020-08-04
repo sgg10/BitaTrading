@@ -1,6 +1,6 @@
 <template>
     <div class="mt-5">
-        <b-table hover selectable select-mode="single" responsive @row-selected="detalles" :busy="isLoading" :fields="fields" :items="entradas">
+        <b-table hover bordered selectable select-mode="single" responsive @row-selected="detalles" :busy="isLoading" :fields="fields" :items="entradas">
             <template v-slot:cell(total) = total>
                 {{total.item.total | dollar}}
             </template>
@@ -30,9 +30,9 @@ export default {
     return {
       fields: [
         { key: 'fecha', label: 'Fecha', sortable: true },
-        { key: 'divisa', label: 'Divisa/Indice', sortable: true },
-        { key: 'lotaje', label: 'Lotaje', sortable: true },
-        { key: 'pips', label: 'Pips', sortable: true },
+        { key: 'divisa', label: 'Simbolo' },
+        // { key: 'lotaje', label: 'Lotaje' },
+        { key: 'pips', label: 'Pips' },
         { key: 'total', label: 'Total', sortable: true }
       ]
     }

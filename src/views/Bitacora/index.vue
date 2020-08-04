@@ -4,7 +4,7 @@
       <Loading/>
     </div>
     <div v-else>
-      <b-container class="px-5 py-3 text-left">
+      <b-container class="py-3 text-left">
         <b-row>
           <b-col>
             <b-button @click="$router.push({path:`/`})" class="goBack"><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill> Volver</b-button>
@@ -15,7 +15,7 @@
             <Encabezado :bitacora="bitacora[0]"/>
           </b-col>
         </b-row>
-        <b-row class="mt-5">
+        <b-row class="mt-5 mb-4">
           <b-col>
             <GraficaBalance :datos="estadistica"/>
           </b-col>
@@ -43,6 +43,7 @@ import ListaEntradas from './ListaEntradas'
 import ButtonCreate from '@/components/ButtonCreate'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import DBController from '../../firebase/controllers/DBController'
+import setError from '@/mixins/setError'
 const db = new DBController()
 
 export default {
@@ -53,6 +54,7 @@ export default {
     ButtonCreate,
     ListaEntradas
   },
+  mixins: [setError],
   data () {
     return {
       actual: 0,
@@ -96,13 +98,26 @@ export default {
     }
   },
   async created () {
-    this.SET_LOADING(true)
-    if (!this.bitacoras.length) {
-      await this.getBitacoras()
+    try {
+      this.SET_LOADING(true)
+      if (!this.bitacoras.length) {
+        await this.getBitacoras()
+      }
+      await this.getBitacora(this.$route.params.id)
+      this.generarEstadisticas()
+      this.SET_LOADING(false)
+    } catch (error) {
+      const errObj = {
+        routeParams: this.$route.params,
+        message: error.message
+      }
+      if (error.response) {
+        errObj.data = error.response.data
+        errObj.status = error.response.status
+      }
+      this.setApiErr(errObj)
+      this.$router.push({ name: 'Error' })
     }
-    await this.getBitacora(this.$route.params.id)
-    this.generarEstadisticas()
-    this.SET_LOADING(false)
   }
 }
 </script>

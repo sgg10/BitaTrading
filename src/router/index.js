@@ -21,7 +21,7 @@ const routerOptions = [
 const routes = routerOptions.map(r => {
   return {
     ...r,
-    component: () => import(/* webpackChunkName: "[request]" */`@/views/${r.name}`)
+    component: () => import(/* webpackChunkName: "[request]" */`@/views/${r.name}/index.vue`)
   }
 })
 
