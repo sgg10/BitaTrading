@@ -62,27 +62,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .roundedButton{
-    border-radius: 100%;
-    height: 60px;
-    width: 60px;
-    background: #5E60CE;
-  }
-  .roundedButton:hover{
-    background: #494aa0;
-  }
-
-  .icono{
-    width: 100%;
-    height: 50px;
-  }
-
-  .goBack{
-    background: #5E60CE;
-  }
-  .goBack:hover{
-    background: #494aa0;
-  }
-</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5">
     <b-container class="formCreate text-left">
-      <Form />
+      <Form/>
     </b-container>
   </div>
 </template>
@@ -14,5 +14,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/css/forms.scss';
+  @import '@/assets/css/forms.scss';
 </style>

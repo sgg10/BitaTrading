@@ -1,0 +1,28 @@
+.formCreate{
+  background: #ece7e7;
+  border: 2px solid #707070;
+  border-radius: 40px;
+  padding: 15px;
+}
+
+.roundedButton{
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  background: #5E60CE;
+  :hover{
+    background: #494aa0;
+  }
+}
+
+.icono{
+  width: 100%;
+  height: 50px;
+}
+
+.goBack{
+  background: #5E60CE;
+  :hover{
+    background: #494aa0;
+  }
+}
