@@ -28,19 +28,18 @@
 
 <script>
 import AuthController from '@/firebase/controllers/AuthController'
+import { mapMutations, mapState } from 'vuex'
 import firebase from 'firebase'
 const auth = new AuthController()
 export default {
-  data () {
-    return {
-      user: null,
-      info: ''
-    }
-  },
   created () {
-    firebase.auth().onAuthStateChanged(user => (this.user = user || null))
+    firebase.auth().onAuthStateChanged(user => this.SET_USER(user || null))
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   methods: {
+    ...mapMutations('auth', ['SET_USER']),
     go (name) {
       this.$router.push({ name })
     },
