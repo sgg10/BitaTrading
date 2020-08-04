@@ -8,7 +8,7 @@
                 :style="`width: ${button.width}px; height: ${button.height}px;`"
                 >
                   <b-icon-plus-circle
-                  :style="`width: ${icon.width}px; height: ${icon.height}px;`"
+                  :style="`width: ${icon.width}${icon.percent ? '%' : 'px'}; height: ${icon.height}px;`"
                   >
                   </b-icon-plus-circle>
                 </b-button>
@@ -16,7 +16,7 @@
         </b-row>
         <b-row>
             <b-col>
-                <h2>{{ values.msg }}</h2>
+                <h2>{{ values.msg || '' }}</h2>
             </b-col>
         </b-row>
     </div>
