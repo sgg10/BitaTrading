@@ -10,7 +10,7 @@ const routerOptions = [
   { path: '/', name: 'Home', meta: { requireAuth } },
   { path: '/about', name: 'About' },
   { path: '/nueva/bitacora', name: 'NewBitacora', meta: { requireAuth } },
-  { path: '/nueva/entrada', name: 'NewEntrada', meta: { requireAuth } },
+  { path: '/nueva/entrada/:id', name: 'NewEntrada', meta: { requireAuth } },
   { path: '/entrada/:id', name: 'Entrada', meta: { requireAuth } },
   { path: '/bitacora/:id', name: 'Bitacora', meta: { requireAuth } },
   { path: '/login', name: 'Login' },

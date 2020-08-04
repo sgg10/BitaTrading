@@ -27,14 +27,13 @@
 import ButtonCreate from '@/components/ButtonCreate'
 import Loading from '@/components/Loading'
 import Lista from './Lista'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
   components: { ButtonCreate, Loading, Lista },
   data () {
     return {
-      isLoading: false,
       values: {
         msg: 'Crea tu primera bitacora',
         route: 'NewBitacora'
@@ -50,15 +49,17 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('loading', ['SET_LOADING']),
     ...mapActions('bitacoras', ['getBitacoras'])
   },
   computed: {
-    ...mapGetters('bitacoras', ['bitacoras'])
+    ...mapGetters('bitacoras', ['bitacoras']),
+    ...mapGetters('loading', ['isLoading'])
   },
   async created () {
-    this.isLoading = true
+    this.SET_LOADING(true)
     await this.getBitacoras()
-    this.isLoading = false
+    this.SET_LOADING(false)
   }
 }
 </script>

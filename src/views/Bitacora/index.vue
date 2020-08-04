@@ -41,7 +41,7 @@ import Encabezado from './Encabezado'
 import GraficaBalance from './GraficaBalance'
 import ListaEntradas from './ListaEntradas'
 import ButtonCreate from '@/components/ButtonCreate'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import DBController from '../../firebase/controllers/DBController'
 const db = new DBController()
 
@@ -55,7 +55,6 @@ export default {
   },
   data () {
     return {
-      isLoading: false,
       actual: 0,
       estadistica: [],
       values: {
@@ -67,10 +66,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('bitacoras', ['bitacora', 'bitacoras'])
+    ...mapGetters('bitacoras', ['bitacora', 'bitacoras']),
+    ...mapGetters('loading', ['isLoading'])
   },
   methods: {
     ...mapActions('bitacoras', ['getBitacora', 'getBitacoras']),
+    ...mapMutations('loading', ['SET_LOADING']),
     entradas () {
       this.$router.push({ name: 'NewEntrada', params: { id: this.$route.params.id } })
     },
@@ -95,13 +96,13 @@ export default {
     }
   },
   async created () {
-    this.isLoading = true
+    this.SET_LOADING(true)
     if (!this.bitacoras.length) {
       await this.getBitacoras()
     }
     await this.getBitacora(this.$route.params.id)
     this.generarEstadisticas()
-    this.isLoading = false
+    this.SET_LOADING(false)
   }
 }
 </script>
