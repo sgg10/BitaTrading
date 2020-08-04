@@ -1,9 +1,9 @@
 <template>
-    <div class="mt-5 pt-5">
+    <div :class="values.formButton ? '': 'mt-5 pt-5'">
         <b-row>
             <b-col>
                 <b-button
-                @click="$router.push({name: values.route})"
+                @click="$router.push({name: values.route, params: values.params})"
                 class="roundedButton"
                 :style="`width: ${button.width}px; height: ${button.height}px;`"
                 >
@@ -12,9 +12,10 @@
                   >
                   </b-icon-plus-circle>
                 </b-button>
+                {{ values.formButton ? values.msg : '' }}
             </b-col>
         </b-row>
-        <b-row>
+        <b-row v-if="!values.formButton">
             <b-col>
                 <h2>{{ values.msg || '' }}</h2>
             </b-col>

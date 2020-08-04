@@ -4,7 +4,7 @@
       <Loading/>
     </div>
     <div v-else>
-      <b-container fluid class="px-5 py-3 text-left">
+      <b-container class="px-5 py-3 text-left">
         <b-row>
           <b-col>
             <b-button @click="$router.push({path:`/`})" class="goBack"><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill> Volver</b-button>
@@ -20,6 +20,16 @@
             <GraficaBalance :datos="estadistica"/>
           </b-col>
         </b-row>
+        <b-row class="mt-3">
+          <b-col>
+            <ButtonCreate :values="values" :button="{ height: 60, width: 60 }" :icon="{ percent: true, width: 100, height: 50 }" />
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <ListaEntradas :entradas="this.bitacora[0].listaEntradas" />
+          </b-col>
+        </b-row>
       </b-container>
     </div>
   </div>
@@ -29,24 +39,68 @@
 import Loading from '@/components/Loading'
 import Encabezado from './Encabezado'
 import GraficaBalance from './GraficaBalance'
+import ListaEntradas from './ListaEntradas'
+import ButtonCreate from '@/components/ButtonCreate'
 import { mapActions, mapGetters } from 'vuex'
+import DBController from '../../firebase/controllers/DBController'
+const db = new DBController()
 
 export default {
-  components: { Loading, Encabezado, GraficaBalance },
+  components: {
+    Loading,
+    Encabezado,
+    GraficaBalance,
+    ButtonCreate,
+    ListaEntradas
+  },
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      actual: 0,
+      estadistica: [],
+      values: {
+        msg: 'Crear entrada',
+        route: 'NewEntrada',
+        params: { id: this.$route.params.id },
+        formButton: true
+      }
     }
   },
   computed: {
-    ...mapGetters('bitacoras', ['bitacora'])
+    ...mapGetters('bitacoras', ['bitacora', 'bitacoras'])
   },
   methods: {
-    ...mapActions('bitacoras', ['getBitacora'])
+    ...mapActions('bitacoras', ['getBitacora', 'getBitacoras']),
+    entradas () {
+      this.$router.push({ name: 'NewEntrada', params: { id: this.$route.params.id } })
+    },
+    variacion () {
+      return parseFloat(((this.actual - this.bitacora[0].valorInicial) * 100) / this.bitacora[0].valorInicial).toFixed(2)
+    },
+    actualizarBitacora (valorActual, variacion) {
+      db.update('Bitacoras', this.$route.params.id, { valorActual, variacion })
+    },
+    generarEstadisticas () {
+      this.actual = parseFloat(this.bitacora[0].valorInicial)
+      const inicial = [this.bitacora[0].fecha, this.actual]
+      const entradas = this.bitacora[0].listaEntradas.reverse().map(e => {
+        this.actual += parseFloat(e.total)
+        return [e.fecha, this.actual]
+      })
+      this.estadistica.push(inicial)
+      entradas.forEach(e => this.estadistica.push(e))
+      this.bitacora[0].valorActual = this.actual
+      this.bitacora[0].variacion = this.variacion()
+      this.actualizarBitacora(this.bitacora[0].valorActual, this.bitacora[0].variacion)
+    }
   },
   async created () {
     this.isLoading = true
+    if (!this.bitacoras.length) {
+      await this.getBitacoras()
+    }
     await this.getBitacora(this.$route.params.id)
+    this.generarEstadisticas()
     this.isLoading = false
   }
 }
