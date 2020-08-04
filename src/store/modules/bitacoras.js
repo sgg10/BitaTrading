@@ -31,6 +31,32 @@ export default {
           reject(new Error(error))
         }
       })
+    },
+    getBitacora ({ state, commit }, id) {
+      return new Promise((resolve, reject) => {
+        try {
+          let datos = {}
+          const entradas = []
+          const bitacora = state.bitacoras.find(bitacora => bitacora.id === id)
+          datos = { ...bitacora }
+          db.get('Entradas').where('bitacoraID', '==', id).get().then(result => {
+            if (!result.empty) {
+              const cant = result.docs.length
+              datos.cantEntradas = cant
+              let cantTrades = 0
+              result.docs.forEach(entrada => {
+                entradas.push(entrada.data())
+                cantTrades += entrada.data().trades.length
+              })
+              datos.cantTrades = cantTrades
+            }
+            commit('SET_STATE', { payload: [datos, entradas], item: 'bitacora' })
+            resolve()
+          })
+        } catch (error) {
+          reject(new Error(error))
+        }
+      })
     }
   },
   getters: {

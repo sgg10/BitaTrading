@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5">
     <b-container class="formCreate text-left">
-      <Form/>
+      <Form />
     </b-container>
   </div>
 </template>
