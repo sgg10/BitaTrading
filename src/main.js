@@ -7,6 +7,7 @@ import { VueSpinners } from '@saeris/vue-spinners'
 import Chart from 'chart.js'
 import Chartick from 'vue-chartkick'
 import './plugins/BootstrapVue'
+import './plugins/fontAwesome'
 import './firebase/services/Init'
 
 Vue.use(VueSpinners)
