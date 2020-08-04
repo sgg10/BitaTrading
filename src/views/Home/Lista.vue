@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { dollarFilter, percentFilter } from '@/filters/numbers'
 export default {
   props: {
     bitacoras: {
@@ -26,6 +27,7 @@ export default {
       required: true
     }
   },
+  filters: { dollar: dollarFilter, percent: percentFilter },
   data () {
     return {
       fields: [
