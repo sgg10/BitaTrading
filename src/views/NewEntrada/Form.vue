@@ -20,7 +20,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
+          <b-col sm="6">
             <div v-for="(index) in nTrades" :key="index">
               <Trade :trade="{}" :validacion="validacion" @entrada="trades[index-1]=$event"/>
               <hr>

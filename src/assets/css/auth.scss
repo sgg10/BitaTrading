@@ -1,7 +1,6 @@
 .formAuth{
   display: flex;
   align-items: center;
-  /*background: #d4e9f8;*/
   justify-content: center;
   flex-direction: column;
   padding: 0px 30px;
@@ -19,6 +18,9 @@
   margin-top: 20px;
   justify-content: space-around;
   flex-direction: column;
+  @media only screen and (max-width: 700px), only screen and (max-device-width: 700px){
+    width: 100%;
+  }
 }
 
 .input{
@@ -36,6 +38,9 @@
   letter-spacing: 1px;
   width: 300px;
   background: #5966E8;
+  @media only screen and (max-width: 700px), only screen and (max-device-width: 700px){
+    width: 100%;
+  }
 }
 .button:hover{
   background: #3140e2;

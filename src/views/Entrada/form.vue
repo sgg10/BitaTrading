@@ -14,16 +14,11 @@
             <b-col><h2>{{fecha}}</h2></b-col>
           </b-row>
           <b-row class=" my-3">
-            <b-col>
+            <b-col sm="6">
               <div v-for="(item, index) in trades" :key="index">
                 <Trade :trade="item" :validacion="false"/>
                 <hr>
               </div>
-              <b-row>
-                <b-col>
-                  <b-button @click="borrar" class="bg-danger ml-2"><b-icon-trash></b-icon-trash> Eliminar entrada</b-button>
-                </b-col>
-              </b-row>
             </b-col>
             <b-col>
               <b-row>
@@ -40,7 +35,7 @@
                   </b-col>
                 </b-row>
                 <b-row>
-                  <b-col v-for="(item, index) in fotos" :key="index" cols="12" md="auto">
+                  <b-col v-for="(item, index) in fotos" :key="index" cols="4" md="auto">
                     <img @click="show" :src="item" width="100" height="100" class=" foto mr-2 mb-2">
                   </b-col>
                   <b-modal id="modal_foto" size="lg" centered hide-footer hide-header>
@@ -54,6 +49,11 @@
                   </b-modal>
                 </b-row>
               </div>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+              <b-button @click="borrar" class="bg-danger ml-2"><b-icon-trash></b-icon-trash> Eliminar entrada</b-button>
             </b-col>
           </b-row>
         </div>
