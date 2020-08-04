@@ -55,9 +55,10 @@ export default {
   computed: {
     ...mapGetters('bitacoras', ['bitacoras'])
   },
-  created () {
+  async created () {
     this.isLoading = true
-    this.getBitacoras(this)
+    await this.getBitacoras()
+    this.isLoading = false
   }
 }
 </script>

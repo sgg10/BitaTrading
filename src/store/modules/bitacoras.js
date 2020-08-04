@@ -15,16 +15,22 @@ export default {
     }
   },
   actions: {
-    async getBitacoras ({ commit }, form = null) {
-      const list = []
-      const { uid } = store.state.auth.user
-      const result = await db.get('Bitacoras').where('userID', '==', uid).get()
-      if (!result.empty) {
-        result.forEach(bitacora => list.push({ ...bitacora.data(), id: bitacora.id }))
-      }
-      commit('SET_STATE', { payload: list, item: 'bitacoras' })
-      // eslint-disable-next-line no-unused-expressions
-      form ? form.isLoading = false : null
+    getBitacoras ({ commit }) {
+      return new Promise((resolve, reject) => {
+        try {
+          const list = []
+          const { uid } = store.state.auth.user
+          db.get('Bitacoras').where('userID', '==', uid).get().then(result => {
+            if (!result.empty) {
+              result.forEach(bitacora => list.push({ ...bitacora.data(), id: bitacora.id }))
+            }
+            commit('SET_STATE', { payload: list, item: 'bitacoras' })
+            resolve()
+          })
+        } catch (error) {
+          reject(new Error(error))
+        }
+      })
     }
   },
   getters: {
