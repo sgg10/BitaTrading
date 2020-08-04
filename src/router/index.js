@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const requireAuth = true
 
 const routerOptions = [
-  { path: '/', name: 'Home' },
+  { path: '/', name: 'Home', meta: { requireAuth } },
   { path: '/about', name: 'About' },
   { path: '/nueva/bitacora', name: 'NewBitacora', meta: { requireAuth } },
   { path: '/nueva/entrada', name: 'NewEntrada', meta: { requireAuth } },
