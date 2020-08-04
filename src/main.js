@@ -3,8 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { auth } from 'firebase'
+import { VueSpinners } from '@saeris/vue-spinners'
 import './plugins/BootstrapVue'
 import './firebase/services/Init'
+
+Vue.use(VueSpinners)
 
 Vue.config.productionTip = false
 
