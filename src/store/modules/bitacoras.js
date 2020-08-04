@@ -49,7 +49,7 @@ export default {
               datos.listaEntradas = []
               let cantTrades = 0
               result.docs.forEach(entrada => {
-                entradas.push(entrada.data())
+                entradas.push({ ...entrada.data(), id: entrada.id })
                 cantTrades += entrada.data().trades.length
 
                 // Variables de reporte/listado de trades

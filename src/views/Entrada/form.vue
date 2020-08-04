@@ -61,6 +61,7 @@ import DBController from '@/firebase/controllers/DBController'
 import Trade from '@/components/Trade'
 import { VueEditor } from 'vue2-editor'
 import { showToast } from '@/utils/showToast'
+import { mapGetters } from 'vuex'
 
 const DB = new DBController()
 
@@ -92,10 +93,14 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('bitacoras', ['bitacora'])
+  },
   async created () {
     try {
-      const result = await DB.get('Entradas').doc(this.$route.params.id).get()
-      const datos = result.exists ? result.data() : null
+      // const result = await DB.get('Entradas').doc(this.$route.params.id).get()
+      const datos = this.bitacora[1].find(e => e.id === this.$route.params.id)
+      // const datos = result.exists ? result.data() : null
       this.fecha = datos.fecha
       this.notas = datos.notas
       this.trades = datos.trades
