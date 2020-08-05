@@ -68,6 +68,7 @@ import Trade from '@/components/Trade'
 import { VueEditor } from 'vue2-editor'
 import { showToast } from '@/utils/showToast'
 import { mapGetters } from 'vuex'
+import setError from '@/mixins/setError'
 
 const DB = new DBController()
 const storage = new StorageController()
@@ -85,6 +86,7 @@ export default {
       notas: ''
     }
   },
+  mixins: [setError],
   computed: {
     ...mapGetters('auth', ['user'])
   },
@@ -117,7 +119,16 @@ export default {
             urls.push(link)
           }
         } catch (error) {
-          console.log(error)
+          const errObj = {
+            routeParams: this.$route.params,
+            message: error.message
+          }
+          if (error.response) {
+            errObj.data = error.response.data
+            errObj.status = error.response.status
+          }
+          this.setApiErr(errObj)
+          this.$router.push({ name: 'Error' })
         }
       }
       return urls

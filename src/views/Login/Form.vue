@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     signInEmail () {
-      console.log('Entre al metodo')
       auth.authEmail(this.email, this.pass)
         .then(user => this.$router.push({ path: '/' }))
         .catch(error => showToast(this.$bvToast, 'Error', error.message, 'danger'))
