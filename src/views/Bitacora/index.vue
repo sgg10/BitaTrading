@@ -86,10 +86,13 @@ export default {
     generarEstadisticas () {
       this.actual = parseFloat(this.bitacora[0].valorInicial)
       const inicial = [this.bitacora[0].fecha, this.actual]
-      const entradas = this.bitacora[0].listaEntradas.reverse().map(e => {
-        this.actual += parseFloat(e.total)
-        return [e.fecha, this.actual]
-      })
+      let entradas = []
+      if (this.bitacora[0].hasOwnProperty('listaEntradas')) {
+        entradas = this.bitacora[0].listaEntradas.reverse().map(e => {
+          this.actual += parseFloat(e.total)
+          return [e.fecha, this.actual]
+        })
+      }
       this.estadistica.push(inicial)
       entradas.forEach(e => this.estadistica.push(e))
       this.bitacora[0].valorActual = this.actual
@@ -104,9 +107,7 @@ export default {
         await this.getBitacoras()
       }
       await this.getBitacora(this.$route.params.id)
-      if (!this.bitacora[0]) {
-        this.generarEstadisticas()
-      }
+      this.generarEstadisticas()
       this.SET_LOADING(false)
     } catch (error) {
       const errObj = {

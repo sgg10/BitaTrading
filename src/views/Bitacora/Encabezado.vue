@@ -18,7 +18,7 @@
         <h4>Valor Actual: {{bitacora.valorActual | dollar}}</h4>
       </b-col>
       <b-col>
-        <h4>Trades: {{bitacora.cantTrades}}</h4>
+        <h4>Trades: {{bitacora.cantTrades || 0}}</h4>
       </b-col>
     </b-row>
   </div>
