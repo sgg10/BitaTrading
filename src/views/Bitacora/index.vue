@@ -104,7 +104,9 @@ export default {
         await this.getBitacoras()
       }
       await this.getBitacora(this.$route.params.id)
-      this.generarEstadisticas()
+      if (!this.bitacora[0]) {
+        this.generarEstadisticas()
+      }
       this.SET_LOADING(false)
     } catch (error) {
       const errObj = {
